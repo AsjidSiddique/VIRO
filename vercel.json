@@ -1,0 +1,8 @@
+{
+  "regions": ["bom1"],
+  "functions": {
+    "app/**": {
+      "maxDuration": 15
+    }
+  }
+}
