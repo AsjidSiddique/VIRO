@@ -1,0 +1,3 @@
+stage,n_rows,n_columns,n_missing_values,n_duplicate_rows,n_duplicate_fraud_rows,n_infinite_values,n_negative_amount,n_legitimate,n_fraud,fraud_percentage,legitimate_percentage
+before_dedup,284807,31,0,1081,19,0,0,284315,492,0.1727485630620034,99.82725143693798
+after_dedup,283726,31,0,0,0,0,0,283253,473,0.1667101358352777,99.83328986416473

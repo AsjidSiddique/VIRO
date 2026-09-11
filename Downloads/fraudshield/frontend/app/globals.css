@@ -1,0 +1,181 @@
+@import "tailwindcss";
+
+:root {
+  --background: #04050a;
+  --surface: #0a0d16;
+  --surface-2: #10141f;
+  --surface-3: #161b28;
+  --border: #1f2635;
+  --border-strong: #2a3244;
+  --foreground: #e9edf4;
+  --muted: #8993a6;
+  --muted-2: #626c80;
+
+  --legit: #22c55e;
+  --legit-soft: rgba(34, 197, 94, 0.12);
+  --fraud: #f43f5e;
+  --fraud-soft: rgba(244, 63, 94, 0.12);
+  --medium: #f59e0b;
+  --medium-soft: rgba(245, 158, 11, 0.12);
+
+  /* Dual-signal accent — cyan (probability signal) + violet (network) */
+  --accent: #2dd4f0;
+  --accent-soft: rgba(45, 212, 240, 0.12);
+  --accent-2: #9b7bf6;
+  --accent-2-soft: rgba(155, 123, 246, 0.12);
+
+  --gradient-signal: linear-gradient(120deg, #2dd4f0 0%, #7c9bf7 50%, #9b7bf6 100%);
+  --gradient-signal-soft: linear-gradient(120deg, rgba(45, 212, 240, 0.14), rgba(155, 123, 246, 0.14));
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-2: var(--muted-2);
+  --color-legit: var(--legit);
+  --color-fraud: var(--fraud);
+  --color-medium: var(--medium);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "tnum" 1, "cv11" 1;
+}
+
+.font-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- backgrounds ---------- */
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.text-gradient-signal {
+  background: var(--gradient-signal);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.border-gradient-signal {
+  position: relative;
+}
+.border-gradient-signal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: var(--gradient-signal);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+/* ---------- glow + elevation ---------- */
+
+.glow-accent {
+  box-shadow: 0 0 0 1px var(--border), 0 0 40px -12px rgba(45, 212, 240, 0.35);
+}
+
+.glow-legit {
+  box-shadow: 0 0 0 1px var(--border), 0 0 40px -14px rgba(34, 197, 94, 0.4);
+}
+
+.glow-fraud {
+  box-shadow: 0 0 0 1px var(--border), 0 0 40px -14px rgba(244, 63, 94, 0.4);
+}
+
+.card-hover {
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  box-shadow: 0 12px 32px -16px rgba(45, 212, 240, 0.25);
+}
+
+/* ---------- pulse / status ---------- */
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 currentColor; opacity: 0.55; }
+  100% { box-shadow: 0 0 0 8px transparent; opacity: 0; }
+}
+
+.status-dot {
+  position: relative;
+}
+.status-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  animation: pulse-ring 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, var(--surface-2) 25%, var(--surface-3) 37%, var(--surface-2) 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.6s ease infinite;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-toast-in {
+  animation: toast-in 0.22s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}
